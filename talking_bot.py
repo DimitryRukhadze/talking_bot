@@ -10,11 +10,13 @@ env.read_env()
 TG_TOKEN = env('TELEGA_TOKEN')
 GCLOUD_PROJECT_ID = env('GOOGLE_CLOUD_PROJECT_ID')
 
+
 def start(update, context):
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='I work!'
     )
+
 
 def detect_intent_texts(project_id, session_id, text, language_code):
 
@@ -53,11 +55,13 @@ def answer_intent(update, context):
         text=intent
     )
 
+
 def echo(update, context):
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=update.message.text
     )
+
 
 def authenticate_implicit_with_adc(project_id):
 
