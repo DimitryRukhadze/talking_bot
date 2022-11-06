@@ -3,6 +3,8 @@ from environs import Env
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from google.cloud import storage, dialogflow
 
+from dialogue_tools import detect_intent
+
 
 env = Env()
 env.read_env()
@@ -18,41 +20,13 @@ def start(update, context):
     )
 
 
-def detect_intent_texts(project_id, session_id, text, language_code):
-
-    session_client = dialogflow.SessionsClient()
-
-    session = session_client.session_path(project_id, session_id)
-    print("Session path: {}\n".format(session))
-
-    text_input = dialogflow.TextInput(text=text, language_code=language_code)
-
-    query_input = dialogflow.QueryInput(text=text_input)
-
-    response = session_client.detect_intent(
-        request={"session": session, "query_input": query_input}
-    )
-
-    print("=" * 20)
-    print("Query text: {}".format(response.query_result.query_text))
-    print(
-        "Detected intent: {} (confidence: {})\n".format(
-            response.query_result.intent.display_name,
-            response.query_result.intent_detection_confidence,
-        )
-    )
-    print("Fulfillment text: {}\n".format(response.query_result.fulfillment_text))
-    return response.query_result.fulfillment_text
-
-
 def answer_intent(update, context):
-    language_code = 'ru'
     texts = update.message.text
     chat_id = update.effective_chat.id
-    intent = detect_intent_texts(GCLOUD_PROJECT_ID, chat_id, text=texts, language_code=language_code)
+    intent = detect_intent(GCLOUD_PROJECT_ID, chat_id, text=texts)
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=intent
+        text=intent.query_result.fulfillment_text
     )
 
 
