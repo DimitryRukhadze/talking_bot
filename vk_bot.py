@@ -1,4 +1,5 @@
 import random
+import logging
 
 from environs import Env
 
@@ -7,6 +8,8 @@ import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 from dialogue_tools import detect_intent
+from logging_mod import LoggerHandler
+from talking_bot import updater
 
 
 def send_message(event, vk_api, project_id):
@@ -26,6 +29,15 @@ if __name__ == '__main__':
 
     vk_token = env('VK_API_KEY')
     gcloud_project_id = env('GOOGLE_CLOUD_PROJECT_ID')
+    log_chat_id = env('LOG_CHAT_ID')
+
+    logger = logging.getLogger('dialog_bot_logger')
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    log_handler = LoggerHandler(bot=updater.bot, log_chat_id=log_chat_id)
+    logger.addHandler(log_handler)
 
     vk_session = vk_api.VkApi(token=vk_token)
     vk_api = vk_session.get_api()
@@ -34,4 +46,7 @@ if __name__ == '__main__':
 
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-           send_message(event, vk_api, gcloud_project_id)
+           try:
+               send_message(event, vk_api, gcloud_project_id)
+           except Exception as exception:
+               logging.debug(exception)
