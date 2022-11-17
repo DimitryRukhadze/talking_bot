@@ -43,7 +43,7 @@ if __name__ == '__main__':
         level=logging.DEBUG,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
-    log_handler = LoggerHandler(bot=updater.bot, log_chat_id=LOG_CHAT_ID)
+    log_handler = LoggerHandler(bot=updater.bot, chat_id=LOG_CHAT_ID)
     logger.addHandler(log_handler)
 
     start_handler = CommandHandler('start', start)
