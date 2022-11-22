@@ -14,6 +14,7 @@ env.read_env()
 TG_TOKEN = env('TELEGA_TOKEN')
 GCLOUD_PROJECT_ID = env('GOOGLE_CLOUD_PROJECT_ID')
 LOG_CHAT_ID = env('LOG_CHAT_ID')
+updater = Updater(token=TG_TOKEN, use_context=True)
 
 
 def start(update, context):
@@ -35,7 +36,6 @@ def answer_intent(update, context):
 
 if __name__ == '__main__':
 
-    updater = Updater(token=TG_TOKEN, use_context=True)
     dispatcher = updater.dispatcher
 
     logger = logging.getLogger('dialog_bot_logger')
