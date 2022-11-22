@@ -36,7 +36,7 @@ if __name__ == '__main__':
         level=logging.DEBUG,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
-    log_handler = LoggerHandler(bot=updater.bot, log_chat_id=log_chat_id)
+    log_handler = LoggerHandler(bot=updater.bot, chat_id=log_chat_id)
     logger.addHandler(log_handler)
 
     vk_session = vk_api.VkApi(token=vk_token)
