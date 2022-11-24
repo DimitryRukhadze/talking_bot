@@ -28,6 +28,7 @@ VK_API_KEY=Ваш ключ к api Вконтакте
 ```commandline
 python talking_bot.py
 ```
+
 Для запуска бота Вконтакте:
 ```commandline
 python vk_bot.py
