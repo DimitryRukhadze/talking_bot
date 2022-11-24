@@ -1,7 +1,8 @@
 Telegram bot и vk bot с использованием Google DialogFlow
 ===
 
-Эти боты созданы с учебными целями для куров [devman](https://www.dvmn.org). Для примеров работающих ботов
+Эти боты созданы с учебными целями для куров [devman](https://www.dvmn.org). Пример работающего бота напишите ему в Telegram: `@Devman_hobot_bot`, 
+или зайдите в группу [Вконтакте](https://vk.com/club212825643).
 
 Начало работы
 ---
