@@ -8,13 +8,9 @@ from dialogflow_tools import detect_intent
 from logging_mod import LoggerHandler
 
 
-env = Env()
-env.read_env()
+logger = logging.getLogger('dialog_bot_logger')
 
-TG_TOKEN = env('TELEGA_TOKEN')
-GCLOUD_PROJECT_ID = env('GOOGLE_CLOUD_PROJECT_ID')
-LOG_CHAT_ID = env('LOG_CHAT_ID')
-updater = Updater(token=TG_TOKEN, use_context=True)
+
 
 
 def start(update, context):
@@ -27,7 +23,7 @@ def start(update, context):
 def answer_intent(update, context):
     texts = update.message.text
     chat_id = update.effective_chat.id
-    intent = detect_intent(GCLOUD_PROJECT_ID, chat_id, text=texts)
+    intent = detect_intent(gcloud_project_id, chat_id, text=texts)
     context.bot.send_message(
         chat_id=chat_id,
         text=intent.query_result.fulfillment_text
@@ -36,14 +32,21 @@ def answer_intent(update, context):
 
 if __name__ == '__main__':
 
+    env = Env()
+    env.read_env()
+
+    tg_token = env('TELEGA_TOKEN')
+    log_chat_id = env('LOG_CHAT_ID')
+    gcloud_project_id = env('GOOGLE_CLOUD_PROJECT_ID')
+
+    updater = Updater(token=tg_token, use_context=True)
     dispatcher = updater.dispatcher
 
-    logger = logging.getLogger('dialog_bot_logger')
     logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
-    log_handler = LoggerHandler(bot=updater.bot, chat_id=LOG_CHAT_ID)
+    log_handler = LoggerHandler(bot=updater.bot, chat_id=log_chat_id)
     logger.addHandler(log_handler)
 
     start_handler = CommandHandler('start', start)

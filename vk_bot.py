@@ -6,10 +6,13 @@ from environs import Env
 import vk_api
 
 from vk_api.longpoll import VkLongPoll, VkEventType
+from telegram.ext import Updater
 
 from dialogflow_tools import detect_intent
 from logging_mod import LoggerHandler
-from talking_bot import updater
+
+
+logger = logging.getLogger('dialog_bot_logger')
 
 
 def send_message(event, vk_api, project_id):
@@ -24,14 +27,17 @@ def send_message(event, vk_api, project_id):
 
 
 if __name__ == '__main__':
+
     env = Env()
     env.read_env()
 
     vk_token = env('VK_API_KEY')
     gcloud_project_id = env('GOOGLE_CLOUD_PROJECT_ID')
     log_chat_id = env('LOG_CHAT_ID')
+    tg_token = env('TELEGA_TOKEN')
 
-    logger = logging.getLogger('dialog_bot_logger')
+    updater = Updater(token=tg_token, use_context=True)
+
     logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
