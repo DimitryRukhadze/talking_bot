@@ -28,10 +28,14 @@ VK_API_KEY=Ваш ключ к api Вконтакте
 ```commandline
 python talking_bot.py
 ```
+![teleg](https://user-images.githubusercontent.com/77689849/203843636-0f9eb5bb-264b-4a15-b05f-4d1c1eba1453.gif)
+
 Для запуска бота Вконтакте:
 ```commandline
 python vk_bot.py
 ```
+![vk](https://user-images.githubusercontent.com/77689849/203844064-e82dcaa3-3387-4cfb-9c26-798411305aa3.gif)
+
 Для тренировки бота запустите файл `bot_trainer.py`, указав путь к JSON файлу, как показано в примере:
 ```commandline
 python bot_trainer.py --training_file путь_к_файлу
