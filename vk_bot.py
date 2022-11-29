@@ -7,14 +7,14 @@ import vk_api
 
 from vk_api.longpoll import VkLongPoll, VkEventType
 
-from dialogue_tools import detect_intent
+from dialogflow_tools import detect_intent
 from logging_mod import LoggerHandler
 from talking_bot import updater
 
 
 def send_message(event, vk_api, project_id):
-    chat_id = f'vk_{event.user_id}'
-    answer = detect_intent(project_id, chat_id, event.text)
+    session_id = f'vk_{event.user_id}'
+    answer = detect_intent(project_id, session_id, event.text)
     if not answer.query_result.intent.is_fallback:
         vk_api.messages.send(
             user_id=event.user_id,

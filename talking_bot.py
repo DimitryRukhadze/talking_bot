@@ -4,7 +4,7 @@ from environs import Env
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-from dialogue_tools import detect_intent
+from dialogflow_tools import detect_intent
 from logging_mod import LoggerHandler
 
 
