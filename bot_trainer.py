@@ -50,12 +50,10 @@ if __name__ == '__main__':
     for case in training_cases:
         display_name = case
         case_body = training_cases[case]
-        training_phrases_parts = case_body['questions']
-        message_texts = {case_body['answer']}
 
         create_intent(
             gcloud_project_id,
             display_name,
-            training_phrases_parts,
-            message_texts
+            case_body['questions'],
+            {case_body['answer']}
         )

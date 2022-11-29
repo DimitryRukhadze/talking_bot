@@ -29,7 +29,7 @@ def answer_intent(update, context):
     chat_id = update.effective_chat.id
     intent = detect_intent(GCLOUD_PROJECT_ID, chat_id, text=texts)
     context.bot.send_message(
-        chat_id=update.effective_chat.id,
+        chat_id=chat_id,
         text=intent.query_result.fulfillment_text
     )
 
