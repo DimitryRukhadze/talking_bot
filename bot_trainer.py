@@ -47,13 +47,10 @@ if __name__ == '__main__':
 
     training_cases = json.loads(training_file_json)
 
-    for case in training_cases:
-        display_name = case
-        case_body = training_cases[case]
-
+    for case, body in training_cases.items():
         create_intent(
             gcloud_project_id,
-            display_name,
-            case_body['questions'],
-            {case_body['answer']}
+            case,
+            body['questions'],
+            {body['answer']}
         )
