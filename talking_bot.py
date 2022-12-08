@@ -1,4 +1,5 @@
 import logging
+from functools import partial
 
 from environs import Env
 
@@ -18,7 +19,7 @@ def start(update, context):
     )
 
 
-def answer_intent(update, context, project_id=''):
+def answer_intent(update, context, project_id):
     texts = update.message.text
     chat_id = update.effective_chat.id
     intent = detect_intent(project_id, chat_id, text=texts)
@@ -39,6 +40,7 @@ def main():
     updater = Updater(token=tg_token, use_context=True)
     dispatcher = updater.dispatcher
 
+    answer_intent_with_id = partial(answer_intent, project_id=gcloud_project_id)
     logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -47,7 +49,7 @@ def main():
     logger.addHandler(log_handler)
 
     start_handler = CommandHandler('start', start)
-    message_hadler = MessageHandler(Filters.text & (~Filters.command), lambda answer_intent: answer_intent(project_id=gcloud_project_id))
+    message_hadler = MessageHandler(Filters.text & (~Filters.command), answer_intent_with_id)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(message_hadler)
